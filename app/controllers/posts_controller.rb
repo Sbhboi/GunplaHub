@@ -8,21 +8,27 @@ class PostsController < ApplicationController
     def create
       @post = current_user.posts.build(post_params)
       if @post.save
+        image = ImageProcessing::MiniMagick.source(params[:post][:image].tempfile)
+        image.resize_to_limit!(300, 300)
         redirect_to root_path, notice: 'Post created successfully.'
       else
         redirect_to root_path, alert: 'Post creation failed.'
       end
     end
   
+    def edit
+      @post = Post.find(params[:id])
+    end
+
     def destroy
       @post = current_user.posts.find(params[:id])
       @post.destroy
-      redirect_to root_path, notice: 'Post deleted successfully.'
+      redirect_to posts_path, notice: 'Post deleted successfully.'
     end
   
     private
   
     def post_params
-      params.require(:post).permit(:title, :content)
+      params.require(:post).permit(:title, :content, :image)
     end
   end
