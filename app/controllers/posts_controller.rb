@@ -8,8 +8,6 @@ class PostsController < ApplicationController
     def create
       @post = current_user.posts.build(post_params)
       if @post.save
-        image = ImageProcessing::MiniMagick.source(params[:post][:image].tempfile)
-        image.resize_to_limit!(300, 300)
         redirect_to root_path, notice: 'Post created successfully.'
       else
         redirect_to root_path, alert: 'Post creation failed.'
