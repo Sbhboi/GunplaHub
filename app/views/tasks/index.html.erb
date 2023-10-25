@@ -4,6 +4,9 @@
   <h3><%= task.title %></h3>
   <p><%= task.description %></p>
   <p>Due Date: <%= task.completed_at %></p>
+  <%= form_with model: task, method: :delete, data: { confirm: 'Are you sure you want to delete this task?' } do |f| %>
+    <%= f.submit 'Delete' %>
+  <% end %>
   <hr>
 <% end %>
 
