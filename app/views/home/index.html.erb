@@ -4,9 +4,11 @@
 <% if user_signed_in? %>
   <%= form_for(Post.new, url: posts_path) do |form| %>
     <%= form.label :title %>
+    <br>
     <%= form.text_field :title, placeholder: 'Enter your post title' %>
     <br>
     <%= form.label :content %>
+    <br>
     <%= form.text_area :content, placeholder: 'Enter your post content' %>
     <br>
     <%= form.file_field :image %>
@@ -25,3 +27,6 @@
 <% end %>
 <hr>
 <%= link_to 'Go to Posts', posts_path %>
+<hr>
+<%= link_to 'Tasks', tasks_path %>
+<%= link_to 'New Task', new_task_path %>

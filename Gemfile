@@ -73,3 +73,4 @@ end
 
 gem "devise"
 gem "mini_magick"
+gem "jquery-rails"

@@ -12,14 +12,15 @@
     <% end %>
   <% end %>
   <% post.comments.each do |comment| %>
-    <div class="comment">
-      <p><strong><%= comment.user.username %>:</strong> <%= comment.content %></p>
-      <%= form_with(model: [post, Comment.new], url: post_comments_path(post), method: :post) do |f| %>
-        <%= f.hidden_field :parent_comment_id, value: comment.id %>
-        <%= f.text_area :content, placeholder: 'Reply to this comment' %>
-        <%= f.submit 'Reply' %>
-      <% end %>
-    </div>
+      <div class="comment">
+        <p><strong><%= comment.user.username %>:</strong> <%= comment.content %></p>
+        <%= form_with(model: [post, Comment.new], url: post_comments_path(post), method: :post) do |f| %>
+          <%= f.hidden_field :parent_comment_id, value: comment.id %>
+          <%= f.text_area :content, placeholder: 'Reply to this comment' %>
+          <br>
+          <%= f.submit 'Reply' %>
+        <% end %>
+      </div>
   <% end %>
   <hr>
   <%= button_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class: 'btn btn-danger', remote: true %>

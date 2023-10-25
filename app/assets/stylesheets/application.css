@@ -13,7 +13,18 @@
  *= require_tree .
  *= require_self
  */
- .responsive-image {
-    max-width: 100%;
-    height: auto;
-  }
+ .comment-textarea-container {
+  display: none;
+}
+
+.reply-button {
+  background-color: #f1f1f1;
+  color: #333;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.reply-button:hover {
+  background-color: #ddd;
+}
