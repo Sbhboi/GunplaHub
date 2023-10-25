@@ -3,5 +3,5 @@ class Task < ApplicationRecord
 
   attribute :title, :string
   attribute :description, :string
-  attribute :completed, :date
+  attribute :completed_at, :datetime
 end
