@@ -3,9 +3,15 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params.merge(user: current_user))
     if @comment.save
-      redirect_to @post, notice: 'Comment created successfully.'
+      respond_to do |format|
+        format.html { redirect_to post_path(@post), notice: 'Comment created successfully.' }
+        format.js # Render create.js.erb for AJAX response
+      end
     else
-      redirect_to @post, alert: 'Failed to create comment.'
+      respond_to do |format|
+        format.html { redirect_to post_path(@post), alert: 'Comment creation failed.' }
+        format.js # Render create.js.erb for AJAX response
+      end
     end
   end
 
