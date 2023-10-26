@@ -1,9 +1,17 @@
 <h1><%= @post.title %></h1>
     <% if @post.image.attached? %>
-        <p><%= @post.content %></p>
+        <% if @post.content.present? %>
+            <p><%= @post.content %></p>
+        <% end %>
         <%= image_tag @post.image.variant(resize_to_limit: [300, 300]) %>
     <% else %>
-        <p>No image available</p>
+        <% if @post.images.any? %>
+            <% @post.images.each do |image| %>
+            <%= image_tag image.variant(resize_to_limit: [300, 300]) %>
+            <% end %>
+        <% else %>
+            <p>No image available</p>
+        <% end %>
     <% end %>
    
 <h2>Comments</h2>

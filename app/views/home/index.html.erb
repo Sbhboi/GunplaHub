@@ -11,7 +11,7 @@
     <br>
     <%= form.text_area :content, placeholder: 'Enter your post content' %>
     <br>
-    <%= form.file_field :image %>
+    <%= form.file_field :images, multiple: true %>
     <br>
     <%= form.submit 'Create Post' %>
   <% end %>
