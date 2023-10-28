@@ -1,0 +1,23 @@
+<h1>Profile</h1>
+
+<h2>User Information</h2>
+<p>Username: <%= @user.username %></p>
+<p>Email: <%= @user.email %></p>
+
+<h2>Avatar</h2>
+<%= image_tag @user.avatar if @user.avatar.attached? %>
+<%= form_with(model: @user, url: user_avatar_path(@user), method: :patch, local: true) do |form| %>
+  <%= form.file_field :avatar %>
+  <%= form.submit 'Upload Avatar' %>
+<% end %>
+
+<h2>Post History</h2>
+<% @user.posts.each do |post| %>
+  <h3><%= post.title %></h3>
+  <p><%= post.content %></p>
+<% end %>
+
+<h2>Comment History</h2>
+<% @user.comments.each do |comment| %>
+  <p><%= comment.content %></p>
+<% end %>

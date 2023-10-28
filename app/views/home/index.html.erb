@@ -1,5 +1,6 @@
 <h1>GunplaHub</h1>
 <p>this is the root page</p>
+<%= link_to 'Profile', profile_path %>
 <hr>
 <% if user_signed_in? %>
   <%= form_for(Post.new, url: posts_path) do |form| %>
