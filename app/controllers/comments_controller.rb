@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:like, :unlike]
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params.merge(user: current_user))
@@ -15,7 +17,21 @@ class CommentsController < ApplicationController
     end
   end
 
+  def like
+    current_user.likes.create(likeable: @comment)
+    redirect_to @comment.post, notice: 'Comment liked successfully.'
+  end
+
+  def unlike
+    current_user.likes.find_by(likeable: @comment).destroy
+    redirect_to @comment.post, notice: 'Comment unliked successfully.'
+  end
+
   private
+
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
 
   def comment_params
     params.require(:comment).permit(:content)

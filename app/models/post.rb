@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   has_many_attached :images
 
   has_many :comments
+  has_many :likes, as: :likable, dependent: :destroy
 
   belongs_to :user
   validates :title, presence: true

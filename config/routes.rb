@@ -6,7 +6,16 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
 
   resources :posts, only: [:show, :index, :create, :destroy] do
-    resources :comments, only: [:create]
+    member do
+      post "like"
+      delete "unlike"
+    end
+    resources :comments, only: [:create] do
+      member do
+        post "like"
+        delete "unlike"
+      end
+    end
   end
   resources :tasks, except: [:show]
 

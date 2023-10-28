@@ -2,5 +2,6 @@
   <% @posts.each do |post| %>
     <h2><%= link_to post.title, post_path(post) %></h2>
   <% end %>
+  
 <hr>
 <%= link_to 'Go to Home', root_path %>

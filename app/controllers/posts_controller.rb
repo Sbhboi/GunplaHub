@@ -23,6 +23,18 @@ class PostsController < ApplicationController
       @comments = @post.comments
     end
 
+    def like
+      @post = Post.find(params[:id])
+      current_user.likes.create(likeable: @post)
+      redirect_to @post, notice: 'Liked successfully.'
+    end
+  
+    def unlike
+      @post = Post.find(params[:id])
+      current_user.likes.find_by(likeable: @post).destroy
+      redirect_to @post, notice: 'Unliked successfully.'
+    end
+    
     def destroy
       @post = current_user.posts.find(params[:id])
       @post.destroy
