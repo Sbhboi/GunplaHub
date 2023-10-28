@@ -15,13 +15,25 @@
     <% end %>
    
 <h2>Comments</h2>
-    <% @comments.each do |comment| %>
+  <% @comments.each do |comment| %>
+    <div class="comment">
+      <% if comment.user.avatar.attached? && comment.user.avatar.persisted? %>
+        <%= image_tag comment.user.avatar, size: "50x50" %>
+      <% else %>
+        <%= image_tag "no_avatar.png", width: "50", height: "50" %>
+      <% end %>
+      <div class="comment-content">
         <strong><%= comment.user.username %>:</strong>
         <p><%= comment.content %></p>
-    <% end %>
+      </div>
+    </div>
+  <% end %>
 
 <h2>Add a Comment</h2>
     <%= form_for([@post, @post.comments.build]) do |f| %>
       <%= f.text_area :content, placeholder: 'Write a comment...' %>
+      <br>
       <%= f.submit 'Post Comment' %>
-    <% end %>    
+    <% end %>
+<hr>
+<%= link_to 'Go to Home', root_path %>

@@ -10,13 +10,13 @@
   <%= form.file_field :avatar %>
   <%= form.submit 'Upload Avatar' %>
 <% end %>
-
+<hr>
 <h2>Post History</h2>
 <% @user.posts.each do |post| %>
   <h3><%= post.title %></h3>
   <p><%= post.content %></p>
 <% end %>
-
+<hr>
 <h2>Comment History</h2>
 <% @user.comments.each do |comment| %>
   <p><%= comment.content %></p>

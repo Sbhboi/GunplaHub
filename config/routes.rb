@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :posts, only: [:show, :index, :create, :destroy] do
     resources :comments, only: [:create]
   end
-  resources :tasks
+  resources :tasks, except: [:show]
 
   root to: "home#index"
 end
