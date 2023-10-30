@@ -18,13 +18,10 @@ class CommentsController < ApplicationController
   end
 
   def like
-    current_user.likes.create(likeable: @comment)
-    redirect_to @comment.post, notice: 'Comment liked successfully.'
-  end
+    comment = Comment.find(params[:id])
+    like_count = comment.likes.count
 
-  def unlike
-    current_user.likes.find_by(likeable: @comment).destroy
-    redirect_to @comment.post, notice: 'Comment unliked successfully.'
+    render json: { success: true, likeCount: like_count }
   end
 
   private
@@ -36,4 +33,5 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content)
   end
+  
 end

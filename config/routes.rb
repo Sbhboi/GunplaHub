@@ -7,15 +7,10 @@ Rails.application.routes.draw do
 
   resources :posts, only: [:show, :index, :create, :destroy] do
     member do
-      post "like"
-      delete "unlike"
+      get "like", to: "posts#like"
+      delete "unlike", to: "posts#unlike"
     end
-    resources :comments, only: [:create] do
-      member do
-        post "like"
-        delete "unlike"
-      end
-    end
+    resources :comments, only: [:create]
   end
   resources :tasks, except: [:show]
 

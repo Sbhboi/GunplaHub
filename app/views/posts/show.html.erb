@@ -13,14 +13,15 @@
     <p>No image available</p>
   <% end %>
 <% end %>
-
+<br>
 <% if user_signed_in? %>
   <% if @post.likes.exists?(user_id: current_user.id) %>
-    <%= link_to 'Unlike', unlike_post_path(@post), method: :delete, class: 'unlike-link' %>
+    <%= link_to 'Unlike', unlike_post_path(@post), method: :delete, class: 'like-unlike-button', data: { liked: true } %>
   <% else %>
-    <%= link_to 'Like', like_post_path(@post), method: :post, class: 'like-link' %>
+    <%= link_to 'Like', like_post_path(@post), method: :post, class: 'like-unlike-button', data: { liked: false } %>
   <% end %>
 <% end %>
+<p><%= @post.likes_count %> likes</p>
 
 <h2>Comments</h2>
 <% @comments.each do |comment| %>
@@ -35,14 +36,6 @@
       <p><%= comment.content %></p>
     </div>
   </div>
-<% end %>
-
-<% if user_signed_in? %>
-  <% if @post.likes.exists?(user_id: current_user.id) %>
-    <%= link_to 'Unlike', unlike_post_path(@post), method: :delete, class: 'unlike-link' %>
-  <% else %>
-    <%= link_to 'Like', like_post_path(@post), method: :post, class: 'like-link' %>
-  <% end %>
 <% end %>
 
 <h2>Add a Comment</h2>

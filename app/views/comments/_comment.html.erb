@@ -1,1 +1,37 @@
 <%= comment.content %>
+<!-- comments/show.html.erb -->
+<%= render @comments %>
+
+<script>
+  // JavaScript code for handling the like functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const likeButtons = document.querySelectorAll('.like-button');
+
+    likeButtons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const commentId = event.target.dataset.commentId;
+
+        // Send an AJAX request to the server to handle the like functionality
+        fetch(`/comments/${commentId}/like`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<%= form_authenticity_token.to_s %>'
+          },
+          body: JSON.stringify({ comment: { like: true } })
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response and update the UI accordingly
+            if (data.success) {
+              // Update the UI to reflect the updated like count or any other changes
+              const likeCountElement = document.querySelector(`.comment-like-count-${commentId}`);
+              likeCountElement.textContent = data.likeCount;
+            }
+          })
+          .catch(error => console.error(error));
+      });
+    });
+  });
+</script>

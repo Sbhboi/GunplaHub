@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!, only: [:create, :destroy]
+    before_action :set_post, only: [:show, :destroy, :like, :unlike]
+
   
     def index
       @posts = Post.all
@@ -25,14 +27,10 @@ class PostsController < ApplicationController
 
     def like
       @post = Post.find(params[:id])
-      current_user.likes.create(likeable: @post)
-      redirect_to @post, notice: 'Liked successfully.'
-    end
-  
-    def unlike
-      @post = Post.find(params[:id])
-      current_user.likes.find_by(likeable: @post).destroy
-      redirect_to @post, notice: 'Unliked successfully.'
+      @post.likes.create(user_id: current_user.id)
+      @post.increment!(:likes_count)
+    
+      redirect_to @post
     end
     
     def destroy
@@ -43,7 +41,12 @@ class PostsController < ApplicationController
   
     private
   
+    def set_post
+      @post = Post.find(params[:id])
+    end
+
     def post_params
       params.require(:post).permit(:title, :content, images: [])
     end
-  end
+    
+end
