@@ -1,49 +1,54 @@
-<h1><%= @post.title %></h1>
-<% if @post.image.attached? %>
-  <% if @post.content.present? %>
-    <p><%= @post.content %></p>
-  <% end %>
-  <%= image_tag @post.image.variant(resize_to_limit: [300, 300]) %>
-<% else %>
-  <% if @post.images.any? %>
-    <% @post.images.each do |image| %>
-      <%= image_tag image.variant(resize_to_limit: [300, 300]) %>
-    <% end %>
-  <% else %>
-    <p>No image available</p>
-  <% end %>
-<% end %>
-<br>
-<% if user_signed_in? %>
-  <% if @post.likes.exists?(user_id: current_user.id) %>
-    <%= link_to 'Unlike', unlike_post_path(@post), method: :delete, class: 'like-unlike-button', data: { liked: true } %>
-  <% else %>
-    <%= link_to 'Like', like_post_path(@post), method: :post, class: 'like-unlike-button', data: { liked: false } %>
-  <% end %>
-<% end %>
-<p><%= @post.likes_count %> likes</p>
-
-<h2>Comments</h2>
-<% @comments.each do |comment| %>
-  <div class="comment">
-    <% if comment.user.avatar.attached? && comment.user.avatar.persisted? %>
-      <%= image_tag comment.user.avatar, size: "50x50" %>
-    <% else %>
-      <%= image_tag "no_avatar.png", width: "50", height: "50" %>
-    <% end %>
-    <div class="comment-content">
-      <strong><%= comment.user.username %>:</strong>
-      <p><%= comment.content %></p>
-    </div>
+<div class="w3-container w3-white w3-margin w3-padding-large">
+  <div class="w3-center">
+    <h3><%= @post.title %></h3>
+    <h5>Title description, <span class="w3-opacity"><%= @post.created_at.strftime("%B %d, %Y") %></span></h5>
   </div>
-<% end %>
 
-<h2>Add a Comment</h2>
-<%= form_for([@post, @post.comments.build]) do |f| %>
-  <%= f.text_area :content, placeholder: 'Write a comment...' %>
-  <br>
-  <%= f.submit 'Post Comment' %>
-<% end %>
+  <div class="w3-justify">
+    <% if @post.image.attached? %>
+      <%= image_tag @post.image.variant(resize_to_limit: [650, 400]) %>
+    <% else %>
+      <p>No image available</p>
+    <% end %>
 
+    <p><%= @post.content %></p>
+    <p class="w3-left">
+      <button class="w3-button w3-white w3-border" onclick="likeFunction(this)" data-likable-type="Post" data-likable-id="<%= @post.id %>">
+        <b><i class="fa fa-thumbs-up"></i> Like</b>
+      </button>
+    </p>
+    <p class="w3-right">
+      <button class="w3-button w3-black" onclick="toggleComments()">
+        <b>Replies </b> <span class="w3-tag w3-white"><%= @comments.count %></span>
+          <div id="commentSection" style="display: none;">
+            <% @comments.each do |comment| %>
+              <div class="w3-row w3-margin-bottom">
+                <div class="w3-col l2 m3">
+                  <% if comment.user.avatar.attached? && comment.user.avatar.persisted? %>
+                    <%= image_tag comment.user.avatar, style: "width:50px;" %>
+                  <% else %>
+                    <%= image_tag "no_avatar.png", style: "width:50px;" %>
+                  <% end %>
+                </div>
+                <div class="w3-col l10 m9">
+                  <h4><%= comment.user.username %></h4>
+                  <p><%= simple_format(comment.content) %></p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </span>
+      </button>
+    </p>
+    <p class="w3-clear"></p>
+
+    <h2>Add a Comment</h2>
+      <%= form_for([@post, @post.comments.build]) do |f| %>
+        <%= f.text_area :content, placeholder: 'Write a comment...' %>
+        <br>
+        <%= f.submit 'Post Comment' %>
+      <% end %>
+  </div>
+</div>
 <hr>
 <%= link_to 'Go to Home', root_path %>

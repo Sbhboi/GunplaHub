@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :authenticate_user!, only: [:create, :destroy]
-    before_action :set_post, only: [:show, :destroy, :like, :unlike]
+    before_action :set_post, only: [:show, :destroy_like, :like, :unlike]
 
   
     def index
@@ -25,6 +25,13 @@ class PostsController < ApplicationController
       @comments = @post.comments
     end
 
+    def destroy
+      @post = current_user.posts.find(params[:id])
+      @post.destroy
+      redirect_to posts_path, notice: 'Post deleted successfully.'
+    end
+  
+    
     def like
       @post = Post.find(params[:id])
       @post.likes.create(user_id: current_user.id)
@@ -32,13 +39,14 @@ class PostsController < ApplicationController
     
       redirect_to @post
     end
-    
-    def destroy
-      @post = current_user.posts.find(params[:id])
-      @post.destroy
-      redirect_to posts_path, notice: 'Post deleted successfully.'
+        
+    def destroy_like
+      @post = Post.find(params[:id])
+      @like = Like.find_by(user_id: current_user.id, post_id: @post.id)
+      @like.destroy
+      redirect_to @post
     end
-  
+
     private
   
     def set_post

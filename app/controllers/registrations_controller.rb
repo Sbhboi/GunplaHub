@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
     def create
         super do |resource|
+          resource.username = params[:user][:username]
           flash[:notice] = I18n.t('devise.registrations.signed_up', username: resource.username)
         end
     end

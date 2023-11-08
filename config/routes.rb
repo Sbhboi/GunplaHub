@@ -5,14 +5,11 @@ Rails.application.routes.draw do
   get 'comments/create'
   devise_for :users, controllers: { registrations: 'registrations' }
 
-  resources :posts, only: [:show, :index, :create, :destroy] do
-    member do
-      get "like", to: "posts#like"
-      delete "unlike", to: "posts#unlike"
-    end
-    resources :comments, only: [:create]
+  resources :posts do
+    resources :comments
   end
-  resources :tasks, except: [:show]
+  resources :tasks
+  resources :likes, only: [:create, :destroy]
 
   root to: "home#index"
 end
