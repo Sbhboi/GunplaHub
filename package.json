@@ -1,17 +1,8 @@
 "scripts": {
-"dev": "react-scripts start",
-"start": "serve -s build",
-"build": "react-scripts build",
-"test": "react-scripts test --env=jsdom",
-"eject": "react-scripts eject",
-"heroku-postbuild": "npm run build"
-}
-
-{
- "name": "Gunplahub",
- "description": "plamo for life !",
- "version": "1.0.0",
- "engines": {
-   "node": "12.11.1"
-   }
-}
+   "dev": "react-scripts start",
+   "start": "serve -s build",
+   "build": "react-scripts build",
+   "test": "react-scripts test --env=jsdom",
+   "eject": "react-scripts eject",
+   "heroku-postbuild": "npm run build"
+ },
