@@ -1,0 +1,17 @@
+{
+  "name": "nodedirectuploader",
+  "version": "1.0.0",
+  "description": "for s3",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello there !"
+  },
+  "author": "",
+  "license": "ISC"
+  
+  "dependencies": {
+    "aws-sdk": "2.x",
+    "ejs": "2.x",
+    "express": "4.x"
+  }
+}
